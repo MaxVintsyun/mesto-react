@@ -1,6 +1,6 @@
 import { options } from "./utils";
 
-class Api {
+export class Api {
     constructor(options) {
         this._url = options.baseUrl;
         this._authorization = options.authorizationTokken;
