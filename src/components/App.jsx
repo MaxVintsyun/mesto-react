@@ -37,9 +37,16 @@ function App() {
   return (
     <div className="page">
       <Header />
-      <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick}/>
+      <Main onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick} />
       <Footer />
-      <PopupWithForm name="edit-avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm
+        name="edit-avatar"
+        title="Обновить аватар"
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}>
         <label className="popup__field">
           <input className="popup__input" id="avatar-link-input" type="url" name="avatar" placeholder="Ссылка на картинку" required />
           <span className="avatar-link-input-error popup__input-error"></span>
@@ -47,7 +54,11 @@ function App() {
         <button className="popup__save-button" type="submit">Сохранить</button>
       </PopupWithForm>
 
-      <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm
+        name="profile"
+        title="Редактировать профиль"
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}>
         <label className="popup__field">
           <input className="popup__input" id="profile-name-input" type="text" name="name" placeholder="Имя" minLength="2" maxLength="40" required />
           <span className="profile-name-input-error popup__input-error"></span>
@@ -59,7 +70,11 @@ function App() {
         <button className="popup__save-button" type="submit">Сохранить</button>
       </PopupWithForm>
 
-      <PopupWithForm name="add-card" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+      <PopupWithForm
+        name="add-card"
+        title="Новое место"
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}>
         <label className="popup__field">
           <input className="popup__input" id="place-name-input" type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required />
           <span className="place-name-input-error popup__input-error"></span>
@@ -71,7 +86,7 @@ function App() {
         <button className="popup__save-button" type="submit">Сохранить</button>
       </PopupWithForm>
 
-      <ImagePopup link={selectedCard?.link} name={selectedCard?.name} onClose={closeAllPopups}/>
+      <ImagePopup link={selectedCard?.link} name={selectedCard?.name} onClose={closeAllPopups} />
 
       <PopupWithForm name="delete-card" title="Вы уверены?" onClose={closeAllPopups}>
         <button className="popup__save-button popup__delete-button" type="submit">Да</button>

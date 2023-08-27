@@ -1,12 +1,12 @@
-import { options } from "./utils";
+import { apiOptions } from "./utils";
 
 export class Api {
-    constructor(options) {
-        this._url = options.baseUrl;
-        this._authorization = options.authorizationTokken;
+    constructor(apiOptions) {
+        this._url = apiOptions.baseUrl;
+        this._authorization = apiOptions.authorizationTokken;
     }
 
-    _checkRequest(res) {
+    _checkResponse(res) {
         if(res.ok) {
             return res.json();
         }
@@ -20,7 +20,7 @@ export class Api {
                 authorization: this._authorization
             }
         })
-        .then(res => this._checkRequest(res))
+        .then(res => this._checkResponse(res))
     }
 
     getDefaultCards() {
@@ -29,7 +29,7 @@ export class Api {
                 authorization: this._authorization
             }
         })
-        .then(res => this._checkRequest(res))
+        .then(res => this._checkResponse(res))
     }
 
     updateUserInfo(data) {
@@ -44,7 +44,7 @@ export class Api {
                 about: data.about
             })
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 
     postCard(data) {
@@ -59,7 +59,7 @@ export class Api {
                 link: data.link
             })
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 
     deleteCard(cardId) {
@@ -70,7 +70,7 @@ export class Api {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 
     putLike(cardId) {
@@ -81,7 +81,7 @@ export class Api {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 
     deleteLike(cardId) {
@@ -92,7 +92,7 @@ export class Api {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 
     changeAvatar(data) {
@@ -106,8 +106,8 @@ export class Api {
                 avatar: data.avatar
             })
         })
-        .then(res => this._checkRequest(res));
+        .then(res => this._checkResponse(res));
     }
 }
 
-export const api = new Api(options);
+export const api = new Api(apiOptions);
