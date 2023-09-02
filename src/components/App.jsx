@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -11,14 +11,14 @@ import { api } from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [cards, setCards] = React.useState([]);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getDefaultCards()])
       .then(([userData, defaultCards]) => {
         setCurrentUser(userData);
@@ -44,38 +44,48 @@ function App() {
   }
 
   function handleUpdateAvatar(data) {
-    api.changeAvatar(data).then((userData) => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    })
+    api.changeAvatar(data)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((error) => { console.error('Ошибка: ', error) });
   }
 
   function handleUpdateUser(data) {
-    api.updateUserInfo(data).then((userData) => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    })
+    api.updateUserInfo(data)
+      .then((userData) => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch((error) => { console.error('Ошибка: ', error) });
   }
 
   function handleAddPlaceSubmit(cardData) {
-    api.postCard(cardData).then((newCard) => {
-      setCards([newCard, ...cards]);
-      closeAllPopups();
-    });
+    api.postCard(cardData)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((error) => { console.error('Ошибка: ', error) });;
   }
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch((error) => { console.error('Ошибка: ', error) });;
   }
 
   function handleCardDelete(cardId) {
-    api.deleteCard(cardId).then(() => {
-      setCards(cards => cards.filter((c) => c._id !== cardId));
-    })
+    api.deleteCard(cardId)
+      .then(() => {
+        setCards(cards => cards.filter((c) => c._id !== cardId));
+      })
+      .catch((error) => { console.error('Ошибка: ', error) });
   }
 
   function closeAllPopups() {
